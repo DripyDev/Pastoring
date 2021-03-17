@@ -9,14 +9,15 @@ public class Settings : ScriptableObject{
     [Header("Distancias")]
     public float dstSeparacionObstaculo = 1.5f;
     public float dstSeparacion = 0.2f;
+    public float distanciaPerro = 1f;
 
     //Pesos de las reglas
     [Header ("Pesos reglas")]
     public float pesoCohesion = 1f;
     public float pesoSeparacion = 2f;
     public float pesoAlineacion = 1f;
-    public float pesoHuida = 10f;
-    public float pesoEvitado = 5;
+    public float pesoHuida = 5f;
+    public float pesoEvitado = 5f;
 
     public LayerMask mascaraEvitado;
 }

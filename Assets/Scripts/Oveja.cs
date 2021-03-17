@@ -5,12 +5,13 @@ using System;
 
 public class Oveja : MonoBehaviour{
     public Settings settings;
+    public GameObject perro;
     public List<Oveja> todasOvejas;
     public List<Oveja> manada;
     //Tener en cuenta que la y siempre sera 0.15
     public Vector3 posicion;
     public Vector3 direccion;
-
+    
     private float velocidad = 0.5f;
     //Reglas para dibujarlas en gizmos cohesion, alineacion y separacion
     public Vector3 r1,r2,r3,r4,r5,r6;
@@ -33,20 +34,23 @@ public class Oveja : MonoBehaviour{
         Vector3 cohesion = Cohesion(manada);
         Vector3 alineacion = Alineacion(manada);
         Vector3 separacion = Separacion(manada);
+        Vector3 huida = HuirPerro(perro);
         //Correccion de la y que siempre debe ser 0 en las reglas
-        cohesion.y=0;alineacion.y=0;separacion.y=0;
-        r1=cohesion;r2=alineacion;r3=separacion;
+        cohesion.y=0;alineacion.y=0;separacion.y=0; huida.y = 0;
+        r1=cohesion;r2=alineacion;r3=separacion;r5 = huida;
 
         Vector3 col = cero;//Colision()? EvitadoObstaculo():cero;
         if(Colision()){
             col = ObstacleRays() * settings.pesoEvitado;
-            print("Voy a chocar contra el escenario");
+            //print("Voy a chocar contra el escenario");
         }
         r4=col;            
         direccion = transform.forward;
         //Tiene que ser la suma de las diferentes reglas de la oveja
-        Vector3 aceleracion = (cohesion+alineacion+separacion+col);
+        Vector3 aceleracion = (cohesion+alineacion+separacion+col+huida);
         float speed = aceleracion.magnitude;
+
+        print("Distancia perro: " + Distancia(perro.transform.position, this.transform.position));
 
         //Si no hay manada ni nada, seguimos nuestra direccion normal
         direccion = speed==0? direccion: aceleracion/speed;
@@ -85,7 +89,8 @@ public class Oveja : MonoBehaviour{
     //     return nuevaDir;
     // }
 
-        ///<summary>Dado un numero de puntos N, devuelve un array de Vector3 con n puntos uniformemente distribuidos  en una esfera a partir del golden ratio</summary>
+    ///<summary>Dado un numero de puntos N, devuelve un array de Vector3 con n puntos uniformemente distribuidos  en una esfera a partir del golden ratio</summary>
+    //NOTA: ESTO NO ES EXACTAMENTE APLICABLE A UNA CIRCUNFERENCIA, ARREGLAR
     private Vector3[] EsferaFibonacci(int numeroPuntos){
         Vector3[] puntos = new Vector3[numeroPuntos];
         var goldenN = (1 + Math.Pow(5,0.5)) / 2;
@@ -102,7 +107,6 @@ public class Oveja : MonoBehaviour{
     ///<summary>Decidimos a donde nos movemos en funcion de los rayos casteados</summary>
     Vector3 ObstacleRays () {
         //Vector con las direcciones de los rayos en funcion del numero aureo
-        //Vector3[] rayDirections2 = BoidHelper.directions;
         Vector3[] rayDirections = EsferaFibonacci(30);
         //Si un rayo NO golpea, nos movemos en esa direccion
         for (int i = 0; i < rayDirections.Length; i++) {
@@ -133,6 +137,11 @@ public class Oveja : MonoBehaviour{
         rA = rA/manada.Count;
         rA.y=0;
         return (rA)*settings.pesoAlineacion;
+    }
+
+    Vector3 HuirPerro(GameObject perro) {
+        Vector3 huida = cero;
+        return Distancia(perro.transform.position, this.transform.position) >= settings.distanciaPerro? cero: (this.transform.position - perro.transform.position)*settings.pesoHuida;
     }
 
     //El vector entre nosotros y el centro de la manada
@@ -214,5 +223,9 @@ public class Oveja : MonoBehaviour{
         Gizmos.color = Color.blue;
         if(r4!=cero)
             Gizmos.DrawLine(transform.position, (r4+transform.position)*1f);
+
+        Gizmos.color = Color.magenta;
+        if (r5 != cero)
+            Gizmos.DrawLine(transform.position, (r5 + transform.position) * 1f);
     }
 }

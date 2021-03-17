@@ -5,6 +5,7 @@ using UnityEngine;
 public class Spawner : MonoBehaviour{
     public int numero_ovejas;
     public GameObject oveja_prefab;
+    public GameObject perro_prefab;
 
     private float radioSpawner = 1.5f;
     //NOTA: TODASLASOVEJAS SOLO SON LAS QUE SACA ESTE SPAWNER, NO JUNTA LAS DEMAS, ARREGLAR
@@ -20,10 +21,14 @@ public class Spawner : MonoBehaviour{
 
                 //Le damos posicion y direccion a la oveja
                 ov.GetComponent<Oveja>().Inicializar(posRandom, dirRandom);
+                ov.GetComponent<Oveja>().perro = perro_prefab;
             }
+            //var aux = GameObject.FindObjectsOfType<Oveja>();
+            //print(aux.Length);
             //AQUI DEBERIA BUSCAR TODAS LAS OVEJAS DE LA ESCENA
             foreach (var o in listaO){
                 o.todasOvejas = listaO;
+                //o.todasOvejas = aux;
             }   
         }
     }

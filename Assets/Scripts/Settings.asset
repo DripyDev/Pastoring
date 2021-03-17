@@ -15,11 +15,12 @@ MonoBehaviour:
   radioPercepcion: 1
   dstSeparacionObstaculo: 1.5
   dstSeparacion: 0.6
+  distanciaPerro: 1
   pesoCohesion: 1
   pesoSeparacion: 2
   pesoAlineacion: 1
-  pesoHuida: 10
-  pesoEvitado: 5
+  pesoHuida: 5
+  pesoEvitado: 10
   mascaraEvitado:
     serializedVersion: 2
     m_Bits: 8
