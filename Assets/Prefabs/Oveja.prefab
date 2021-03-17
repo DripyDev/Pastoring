@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6577230133648800002}
   - component: {fileID: 5379310672762126878}
+  - component: {fileID: 4193918481787971840}
   m_Layer: 0
   m_Name: Oveja
   m_TagString: Untagged
@@ -45,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settings: {fileID: 11400000, guid: 7da2e43f61a4159418156bbb14d89b4a, type: 2}
+  perro: {fileID: 0}
   todasOvejas: []
   manada: []
   posicion: {x: 0, y: 0, z: 0}
@@ -55,6 +57,19 @@ MonoBehaviour:
   r4: {x: 0, y: 0, z: 0}
   r5: {x: 0, y: 0, z: 0}
   r6: {x: 0, y: 0, z: 0}
+--- !u!65 &4193918481787971840
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8667417030855255274}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.23080297, y: 0.27040294, z: 0.3679641}
+  m_Center: {x: 0.0017969236, y: -0.017386451, z: -0.013574503}
 --- !u!1001 &687318730932534889
 PrefabInstance:
   m_ObjectHideFlags: 0
